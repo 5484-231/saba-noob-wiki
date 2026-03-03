@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const sectionItems = ['概要', '前提知識', '手順', '検証', 'トラブルシュート', '参考リンク'];
+---
+
+<Layout title="Saba Wiki | 記事テンプレ" description="記事を書くためのテンプレート">
+	<section class="card">
+		<h1>記事テンプレート</h1>
+		<p>
+			新規記事は <code>src/content/templates/article-template.md</code> をコピーし、
+			<code>src/content/articles</code> に <code>.md</code> で追加してください。
+		</p>
+	</section>
+
+	<section class="card" style="margin-top: 12px;">
+		<h2>Frontmatter 例</h2>
+		<pre><code>---
+title: 記事タイトル
+description: 記事の要約
+category: server
+tags: [tag1, tag2]
+updated: 2026-03-03
+---</code></pre>
+	</section>
+
+	<section class="card" style="margin-top: 12px;">
+		<h2>本文セクション案</h2>
+		<ul>
+			{sectionItems.map((item) => <li>{item}</li>)}
+		</ul>
+	</section>
+
+	<section class="card" style="margin-top: 12px;">
+		<h2>コマンド記録例</h2>
+		<p><code>ipconfig /all</code> や <code>systemctl status nginx</code> など、実行ログを残します。</p>
+	</section>
+</Layout>

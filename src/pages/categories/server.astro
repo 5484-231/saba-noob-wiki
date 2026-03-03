@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles'))
+	.filter((entry) => entry.data.category === 'server')
+	.sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime());
+---
+
+<Layout title="Saba Wiki | Server" description="サーバーカテゴリ記事一覧">
+	<section class="card">
+		<h1>Server カテゴリ</h1>
+		<p>サーバー運用・構築に関する記事をここに追加します。</p>
+	</section>
+
+	<section class="card" style="margin-top: 12px;">
+		<h2>記事一覧</h2>
+		<ul>
+			{articles.map((article) => (
+				<li>
+					<a href={`/articles/${article.slug}`}><strong>{article.data.title}</strong></a>
+					<small> - {article.data.tags.join(', ')}</small>
+				</li>
+			))}
+		</ul>
+	</section>
+</Layout>

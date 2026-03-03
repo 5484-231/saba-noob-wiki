@@ -1,23 +1,135 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Saba Wiki',
+	description = 'サーバー/ネットワークの知識をまとめる個人Wiki',
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<header>
+			<div class="inner">
+				<a class="brand" href="/">Saba Wiki</a>
+				<nav>
+					<a href="/">Home</a>
+					<a href="/categories/server">Server</a>
+					<a href="/categories/network">Network</a>
+					<a href="/templates/article">Template</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="inner">
+			<slot />
+		</main>
 	</body>
 </html>
 
 <style>
+	:root {
+		color-scheme: light;
+		font-family: Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
+		line-height: 1.6;
+	}
+
 	html,
 	body {
 		margin: 0;
-		width: 100%;
-		height: 100%;
+		padding: 0;
+		background: #f7f9fc;
+		color: #0f172a;
+	}
+
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: #ffffff;
+		border-bottom: 1px solid #e2e8f0;
+	}
+
+	.inner {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 0 16px;
+	}
+
+	header .inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		height: 60px;
+	}
+
+	.brand {
+		font-weight: 700;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	nav {
+		display: flex;
+		gap: 12px;
+		flex-wrap: wrap;
+	}
+
+	nav a {
+		text-decoration: none;
+		color: #334155;
+		font-size: 0.95rem;
+	}
+
+	nav a:hover {
+		color: #0f172a;
+	}
+
+	main {
+		padding-top: 24px;
+		padding-bottom: 40px;
+	}
+
+	h1,
+	h2,
+	h3 {
+		line-height: 1.25;
+	}
+
+	.card {
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-radius: 12px;
+		padding: 16px;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 12px;
+	}
+
+	ul {
+		padding-left: 1.1rem;
+	}
+
+	code {
+		background: #e2e8f0;
+		padding: 0.1em 0.4em;
+		border-radius: 4px;
 	}
 </style>

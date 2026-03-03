@@ -1,11 +1,46 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const recentArticles = (await getCollection('articles'))
+	.sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime())
+	.slice(0, 5);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Saba Wiki | Home" description="サーバー/ネットワーク学習Wikiのトップページ">
+  <section class="card">
+    <h1>サーバー/ネットワークWiki</h1>
+    <p>
+      学習メモをカテゴリごとに整理して蓄積するための型枠です。記事は
+      <code>src/content/articles/*.md</code>
+      に追加してください。テンプレートは
+      <code>src/content/templates/article-template.md</code>
+      をコピーして使えます。
+    </p>
+  </section>
+
+  <section class="grid" style="margin-top: 12px;">
+    <article class="card">
+      <h2>Server</h2>
+      <p>OS、Webサーバー、仮想化、監視、セキュリティ設定など。</p>
+      <p><a href="/categories/server">カテゴリを見る</a></p>
+    </article>
+    <article class="card">
+      <h2>Network</h2>
+      <p>OSI、TCP/IP、DNS、HTTP、FW、ルーティングなど。</p>
+      <p><a href="/categories/network">カテゴリを見る</a></p>
+    </article>
+  </section>
+
+  <section class="card" style="margin-top: 12px;">
+    <h2>最近の記事</h2>
+    <ul>
+      {recentArticles.map((article) => (
+				<li>
+					<a href={`/articles/${article.slug}`}>{article.data.title}</a>
+					<small> - {article.data.category}</small>
+				</li>
+			))}
+    </ul>
+  </section>
 </Layout>
